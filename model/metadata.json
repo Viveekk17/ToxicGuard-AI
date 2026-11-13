@@ -1,0 +1,23 @@
+{
+    "project": "ToxicGuard AI",
+    "model": "bert-base-uncased",
+    "task": "Multi-label Toxic Comment Classification",
+    "categories": [
+        "toxic",
+        "severe_toxic",
+        "obscene",
+        "threat",
+        "insult",
+        "identity_hate"
+    ],
+    "epochs": 3,
+    "max_length": 256,
+    "batch_size": 16,
+    "optimizer": "AdamW",
+    "learning_rate": 2e-05,
+    "test_macro_f1": 0.6835,
+    "test_micro_f1": 0.8007,
+    "optimized_test_macro_f1": 0.6885,
+    "optimized_test_micro_f1": 0.7988,
+    "explainability": "SHAP"
+}
