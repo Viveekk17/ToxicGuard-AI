@@ -23,110 +23,112 @@ MAX_SHAP_EVALS = 120
 CSS = """
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap');
-:root{--page:#f2f4f0;--card:#fff;--ink:#1b2a29;--muted:#667570;--line:#dfe5e0;--teal:#2f5d5e;--deep:#1f3d3e;
---red:#bf4f47;--sred:#fbecea;--amber:#b27a2c;--samber:#fbf3e3;--green:#3f7a5c;--sgreen:#ecf4ee;--track:#e8ede9}
+:root{--page:#e8edf0;--card:rgba(255,255,255,.72);--card-solid:#fbfcfc;--ink:#122528;--muted:#687b80;--line:rgba(18,37,40,.12);--teal:#087f86;--deep:#12363a;
+--red:#c95751;--sred:#fff0ee;--amber:#b47a2c;--samber:#fff7e7;--green:#33805d;--sgreen:#eaf8f1;--track:#dfe8e9;--shadow:0 24px 70px rgba(18,54,58,.12)}
 html,body,.stApp{font-family:'DM Sans',sans-serif;color:var(--ink);color-scheme:light}
-.stApp{background:var(--page)}
+.stApp{background:radial-gradient(circle at 8% 2%,rgba(139,215,220,.45),transparent 30%),radial-gradient(circle at 94% 18%,rgba(255,255,255,.96),transparent 28%),linear-gradient(145deg,#e8edf0 0%,#f4f6f5 52%,#e0e9eb 100%);background-attachment:fixed}
+.stApp:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.22;background-image:radial-gradient(rgba(18,54,58,.13) .6px,transparent .6px);background-size:8px 8px;mask-image:linear-gradient(to bottom,black,transparent 65%)}
 .stApp [data-testid="stMarkdownContainer"],.stApp label p{color:var(--ink)}
 header[data-testid="stHeader"],#MainMenu,footer{display:none}
-.block-container{max-width:1600px;padding:1.6rem 3rem 2rem}
-div[data-testid="stVerticalBlock"]{gap:1rem}
+.block-container{max-width:1560px;padding:2.2rem 3.5rem 2.5rem}
+div[data-testid="stVerticalBlock"]{gap:1.15rem}
 div[data-testid="stHorizontalBlock"]{gap:1.5rem}
 
-/* cards */
-div[data-testid="stVerticalBlockBorderWrapper"]{background:var(--card);border:1px solid var(--line)!important;
-border-radius:16px!important;padding:1.6rem 1.7rem;box-shadow:0 1px 2px rgba(27,42,41,.04)}
+div[data-testid="stVerticalBlockBorderWrapper"]{background:var(--card);border:1px solid rgba(255,255,255,.9)!important;border-radius:26px!important;padding:1.7rem 1.8rem;box-shadow:var(--shadow),inset 0 1px 0 rgba(255,255,255,.9);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);animation:rise .55s ease both}
+div[data-testid="stVerticalBlockBorderWrapper"]:has([data-testid="stHorizontalBlock"]):not(:has(div[data-baseweb="textarea"])){position:relative;overflow:hidden;background:linear-gradient(135deg,rgba(219,249,242,.68),rgba(255,255,255,.52) 48%,rgba(226,244,241,.62))!important;border-color:rgba(255,255,255,.98)!important;box-shadow:0 28px 80px rgba(18,54,58,.16),inset 0 1px 0 rgba(255,255,255,.98),inset 0 -1px 0 rgba(8,127,134,.08)}
+div[data-testid="stVerticalBlockBorderWrapper"]:has([data-testid="stHorizontalBlock"]):not(:has(div[data-baseweb="textarea"])):before{content:"";position:absolute;inset:-45% 28% 42% -10%;background:linear-gradient(115deg,rgba(255,255,255,.62),rgba(255,255,255,0));transform:rotate(-8deg);pointer-events:none}
+div[data-testid="stVerticalBlockBorderWrapper"]:has(.auto-category){position:relative;overflow:hidden;background:linear-gradient(145deg,rgba(232,250,245,.74),rgba(255,255,255,.48) 56%,rgba(221,242,241,.62))!important;border-color:rgba(255,255,255,.98)!important;box-shadow:0 20px 55px rgba(18,54,58,.13),inset 0 1px 0 rgba(255,255,255,.98),inset 0 -1px 0 rgba(8,127,134,.08)}
+div[data-testid="stVerticalBlockBorderWrapper"]:has(.auto-category):before{content:"";position:absolute;inset:-35% -12% 58% 24%;background:linear-gradient(115deg,rgba(255,255,255,.68),rgba(255,255,255,0));transform:rotate(8deg);pointer-events:none}
+div[data-testid="stVerticalBlockBorderWrapper"]:hover{box-shadow:0 28px 80px rgba(18,54,58,.15),inset 0 1px 0 rgba(255,255,255,.95)}
 div[data-testid="stForm"]{border:0!important;padding:0!important;background:transparent!important}
 
-/* top bar + hero */
-.topbar{display:flex;justify-content:space-between;align-items:center;padding-bottom:1.1rem;border-bottom:1px solid var(--line)}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding-bottom:1.35rem;border-bottom:1px solid rgba(18,54,58,.14)}
 .logo{display:flex;align-items:center;gap:14px}
-.mark{width:44px;height:44px;border-radius:12px;background:var(--teal);color:#fff;display:grid;place-items:center;
-font:800 17px 'Manrope',sans-serif;letter-spacing:-.5px}
-.brand{font:800 25px 'Manrope',sans-serif;letter-spacing:-.6px;line-height:1.1}
-.brand-sub{font-size:14px;color:var(--muted);margin-top:2px}
-.pill{display:inline-flex;align-items:center;gap:9px;font-size:14px;font-weight:600;color:var(--teal);
-background:var(--sgreen);border:1px solid #d5e6da;border-radius:999px;padding:8px 16px}
-.dot{width:9px;height:9px;border-radius:50%;background:#4f9a72;box-shadow:0 0 0 4px #dcece2}
-.hero{display:flex;justify-content:flex-start;align-items:flex-end;padding:1.5rem 0 .5rem}
-.headline{font:400 clamp(44px,4.8vw,78px)/1.02 'Newsreader',serif;letter-spacing:-2px;color:var(--deep)}
-.hero-copy{max-width:520px;font-size:18px;line-height:1.6;color:var(--muted);padding-bottom:8px}
+.mark{width:48px;height:48px;border-radius:17px;background:linear-gradient(145deg,#159ba1,#075f68);color:#fff;display:grid;place-items:center;font:800 17px 'Manrope',sans-serif;letter-spacing:-.5px;box-shadow:0 9px 22px rgba(8,127,134,.3),inset 0 1px 0 rgba(255,255,255,.45)}
+.brand{font:800 25px 'Manrope',sans-serif;letter-spacing:-.7px;line-height:1.1}
+.brand-sub{font-size:13px;color:var(--muted);margin-top:4px;letter-spacing:.02em}
+.pill{display:inline-flex;align-items:center;gap:9px;font-size:13px;font-weight:700;color:var(--teal);background:rgba(234,248,241,.78);border:1px solid rgba(51,128,93,.22);border-radius:999px;padding:9px 15px;box-shadow:inset 0 1px 0 rgba(255,255,255,.9)}
+.dot{width:8px;height:8px;border-radius:50%;background:#3fa374;box-shadow:0 0 0 4px rgba(63,163,116,.15)}
+.command{font:800 clamp(25px,3vw,38px)/1.1 'Manrope',sans-serif;letter-spacing:-1.3px;color:var(--deep);margin:2.3rem 0 .35rem}
+.command-sub{font-size:15px;color:var(--muted);margin-bottom:1rem}
 
-/* section headers */
-.sec-title{font:700 21px 'Manrope',sans-serif;letter-spacing:-.3px}
-.sec-sub{font-size:15px;color:var(--muted);margin:3px 0 4px}
+.sec-title{font:800 20px 'Manrope',sans-serif;letter-spacing:-.4px}
+.sec-sub{font-size:14px;color:var(--muted);margin:5px 0 7px}
+.auto-category{display:inline-flex;align-items:center;gap:8px;margin:12px 0 16px;padding:8px 12px;border:1px solid rgba(8,127,134,.18);border-radius:999px;background:rgba(234,248,241,.72);color:var(--teal);font-size:13px;font-weight:700}
+.auto-category strong{color:var(--deep);font-weight:800}
 
-/* input */
-div[data-baseweb="textarea"]{background:#fff!important;border:1.5px solid #cfd9d2!important;border-radius:12px!important}
-div[data-baseweb="textarea"]:focus-within{border-color:var(--teal)!important;box-shadow:0 0 0 3px rgba(47,93,94,.14)!important}
-.stTextArea textarea{background:#fff!important;color:#000!important;-webkit-text-fill-color:#000!important;
-opacity:1!important;font:400 18px/1.6 'DM Sans',sans-serif!important;padding:16px 18px!important;min-height:210px!important}
-.stTextArea textarea::placeholder{color:#93a09a!important}
-div[data-testid="stWidgetLabel"] p{font-size:15px!important}
-div[data-testid="stFormSubmitButton"] button,button[kind="secondaryFormSubmit"]{background:var(--deep)!important;color:#fff!important;
-border:0!important;border-radius:12px!important;min-height:56px;font-weight:700;transition:background .15s}
-div[data-testid="stFormSubmitButton"] button p{color:#fff!important;font:700 17px 'DM Sans',sans-serif!important}
-div[data-testid="stFormSubmitButton"] button:hover{background:var(--teal)!important}
-div[data-testid="stButton"] button{background:#f3f6f3;border:1px solid var(--line);border-radius:999px;min-height:40px;color:var(--ink)}
+div[data-baseweb="textarea"]{background:linear-gradient(135deg,rgba(210,247,239,.86),rgba(255,255,255,.82) 52%,rgba(228,248,244,.82))!important;border:1px solid rgba(18,54,58,.16)!important;border-radius:18px!important;overflow:hidden;box-shadow:0 8px 24px rgba(18,54,58,.06),inset 0 1px 0 rgba(255,255,255,.95)}
+div[data-baseweb="textarea"]:focus-within{border-color:var(--teal)!important;box-shadow:0 0 0 4px rgba(8,127,134,.12),0 8px 24px rgba(18,54,58,.08),inset 0 1px 0 #fff!important}
+.stTextArea textarea{background:linear-gradient(135deg,rgba(210,247,239,.86),rgba(255,255,255,.82) 52%,rgba(228,248,244,.82))!important;border:0!important;border-radius:17px!important;outline:0!important;color:var(--ink)!important;-webkit-text-fill-color:var(--ink)!important;opacity:1!important;font:400 18px/1.65 'DM Sans',sans-serif!important;padding:18px 19px!important;min-height:210px!important;resize:none!important}
+.stTextArea textarea::placeholder{color:#93a4a8!important}
+div[data-testid="stWidgetLabel"] p{font-size:14px!important}
+div[data-testid="stFormSubmitButton"] button,button[kind="secondaryFormSubmit"]{background:linear-gradient(135deg,#16494d,#092f35)!important;color:#fff!important;border:0!important;border-radius:16px!important;min-height:56px;font-weight:700;box-shadow:0 10px 24px rgba(9,47,53,.2);transition:transform .2s,box-shadow .2s,filter .2s}
+div[data-testid="stFormSubmitButton"] button p{color:#fff!important;font:700 16px 'DM Sans',sans-serif!important}
+div[data-testid="stFormSubmitButton"] button:hover{filter:brightness(1.12);transform:translateY(-2px);box-shadow:0 14px 28px rgba(9,47,53,.27)}
+div[data-testid="stButton"] button{background:rgba(255,255,255,.55);border:1px solid var(--line);border-radius:999px;min-height:40px;color:var(--ink)}
 div[data-testid="stButton"] button p{font:600 14.5px 'DM Sans',sans-serif;color:var(--ink)}
 div[data-testid="stButton"] button:hover{border-color:var(--teal);background:var(--sgreen)}
+div[data-testid="stAlert"]{border-radius:15px}
 div[data-testid="stAlert"] p{font-size:15px}
-.hint{font-size:14px;color:var(--muted)}
+.hint{font-size:13px;color:var(--muted)}
 
-/* pipeline */
-.pipe{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:10px}
-.step{background:#f6f8f5;border:1px solid #e6ece7;border-radius:10px;padding:14px}
-.step b{display:block;font:800 13px 'Manrope',sans-serif;color:var(--teal);margin-bottom:6px}
-.step span{display:block;font-weight:600;font-size:15px}
-.step em{display:block;font-style:normal;font-size:13px;color:var(--muted);margin-top:3px;line-height:1.4}
+.pipe{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}
+.step{background:rgba(246,250,250,.62);border:1px solid rgba(18,54,58,.1);border-radius:17px;padding:15px;transition:transform .2s,background .2s}
+.step:hover{transform:translateY(-3px);background:rgba(255,255,255,.88)}
+.step b{display:block;font:800 12px 'Manrope',sans-serif;color:var(--teal);margin-bottom:7px}
+.step span{display:block;font-weight:700;font-size:14px}
+.step em{display:block;font-style:normal;font-size:12px;color:var(--muted);margin-top:4px;line-height:1.45}
 
-/* verdict */
-.verdict{display:flex;align-items:center;gap:26px;border-radius:14px;padding:22px 24px;margin:6px 0 4px}
-.verdict.bad{background:var(--sred)}.verdict.warn{background:var(--samber)}.verdict.good{background:var(--sgreen)}.verdict.idle{background:#f3f6f3}
-.ring{width:132px;height:132px;flex:none;border-radius:50%;display:grid;place-items:center;
-background:conic-gradient(var(--c) calc(var(--p)*1%),var(--track) 0)}
-.ring-in{width:102px;height:102px;border-radius:50%;background:#fff;display:grid;place-items:center;text-align:center}
+.verdict{display:flex;align-items:center;gap:26px;border-radius:21px;padding:23px 24px;margin:8px 0 7px;border:1px solid rgba(255,255,255,.82);box-shadow:inset 0 1px 0 rgba(255,255,255,.9)}
+.verdict.bad{background:linear-gradient(120deg,rgba(255,240,238,.92),rgba(255,249,247,.58))}.verdict.warn{background:linear-gradient(120deg,rgba(255,247,231,.92),rgba(255,252,244,.58))}.verdict.good{background:linear-gradient(120deg,rgba(234,248,241,.92),rgba(246,255,251,.58))}.verdict.idle{background:rgba(243,248,248,.72)}
+.ring{width:132px;height:132px;flex:none;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--c) calc(var(--p)*1%),var(--track) 0);box-shadow:0 12px 22px rgba(18,54,58,.1)}
+.ring-in{width:102px;height:102px;border-radius:50%;background:rgba(255,255,255,.9);display:grid;place-items:center;text-align:center;box-shadow:inset 0 1px 4px rgba(18,54,58,.08)}
 .ring-v{font:800 28px 'Manrope',sans-serif;line-height:1}
 .ring-l{font-size:12px;color:var(--muted);margin-top:3px}
-.v-level{font:700 15px 'DM Sans',sans-serif;margin-bottom:4px}
+.v-level{font:700 14px 'DM Sans',sans-serif;margin-bottom:5px}
 .bad .v-level{color:var(--red)}.warn .v-level{color:var(--amber)}.good .v-level{color:var(--green)}.idle .v-level{color:var(--muted)}
-.v-title{font:800 26px/1.2 'Manrope',sans-serif;letter-spacing:-.5px}
-.v-sub{font-size:16px;color:var(--muted);margin-top:6px;line-height:1.5}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:12px 0 8px}
-.stat{border:1px solid var(--line);border-radius:10px;padding:14px 16px}
-.stat-l{font-size:14px;color:var(--muted)}
-.stat-v{font:800 26px 'Manrope',sans-serif;letter-spacing:-.5px;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.v-title{font:800 25px/1.2 'Manrope',sans-serif;letter-spacing:-.6px}
+.v-sub{font-size:15px;color:var(--muted);margin-top:7px;line-height:1.5}
+.stats{display:grid;grid-template-columns:1fr;gap:10px;margin:12px 0 10px}
+.stat{border:1px solid rgba(18,54,58,.11);border-radius:17px;padding:14px 16px;background:rgba(255,255,255,.43)}
+.stat-l{font-size:13px;color:var(--muted)}
+.stat-v{font:800 25px 'Manrope',sans-serif;letter-spacing:-.6px;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
-/* score rows */
-.row{display:grid;grid-template-columns:150px 1fr 78px 108px 100px;align-items:center;gap:14px;padding:13px 0;border-top:1px solid #edf1ed}
+.row{display:grid;grid-template-columns:150px 1fr 78px 108px 100px;align-items:center;gap:14px;padding:13px 0;border-top:1px solid rgba(18,54,58,.08)}
 .row:first-child{border-top:0}
-.r-name{font-size:17px;font-weight:600}
-.track{height:12px;background:var(--track);border-radius:99px;overflow:hidden}
-.fill{height:100%;border-radius:99px;background:#6f9a96}.fill.hit{background:var(--red)}
-.r-val{text-align:right;font:700 17px 'Manrope',sans-serif}
-.r-threshold{text-align:right;font-size:13px;color:var(--muted)}
-.r-tag{justify-self:end;font-size:13px;font-weight:700;border-radius:99px;padding:5px 12px;color:var(--muted);background:#f0f3f0}
+.r-name{font-size:16px;font-weight:700}
+.track{height:10px;background:var(--track);border-radius:99px;overflow:hidden}
+.fill{height:100%;border-radius:99px;background:linear-gradient(90deg,#7bb2b0,#3d8888);transition:width .6s ease}.fill.hit{background:linear-gradient(90deg,#e18378,var(--red))}
+.r-val{text-align:right;font:700 16px 'Manrope',sans-serif}
+.r-threshold{text-align:right;font-size:12px;color:var(--muted)}
+.r-tag{justify-self:end;font-size:12px;font-weight:700;border-radius:99px;padding:5px 11px;color:var(--muted);background:rgba(18,54,58,.06)}
 .r-tag.hit{color:var(--red);background:var(--sred)}
+.category-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:4px 0 20px}
+.category-card{min-width:0;padding:13px 14px;border:1px solid rgba(18,54,58,.1);border-radius:17px;background:rgba(255,255,255,.42);box-shadow:inset 0 1px 0 rgba(255,255,255,.85)}
+.category-card.detected{border-color:rgba(201,87,81,.22);background:rgba(255,240,238,.5)}
+.category-card-name{font-size:13px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.category-card-score{font:800 23px 'Manrope',sans-serif;letter-spacing:-.5px;margin-top:6px;color:var(--deep)}
+.category-card-meta{font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.category-card-track{height:5px;margin-top:10px;border-radius:99px;background:var(--track);overflow:hidden}
+.category-card-track span{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#7bb2b0,#3d8888)}
+.category-card.detected .category-card-track span{background:linear-gradient(90deg,#e18378,var(--red))}
 
-/* explanation */
 .xgrid{display:grid;grid-template-columns:1.7fr 1fr;gap:36px;margin-top:8px}
 .explain-select{max-width:320px;margin:12px 0 16px}
-.explain-summary{margin-top:16px;padding:13px 15px;border-left:3px solid var(--teal);background:#f3f7f4;
-font-size:14px;line-height:1.55;color:var(--muted)}
 .annot{font:400 25px/1.9 'Newsreader',serif;color:var(--deep);white-space:pre-wrap;overflow-wrap:anywhere}
-.tok{padding:2px 5px;border-radius:5px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
-.legend{display:flex;gap:22px;font-size:14px;color:var(--muted);margin-top:16px}
-.sw{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:7px}
-.drv-h{font:700 16px 'Manrope',sans-serif;margin-bottom:6px}
+.tok{padding:2px 5px;border-radius:7px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.legend{display:flex;gap:22px;font-size:13px;color:var(--muted);margin-top:16px}
+.sw{display:inline-block;width:13px;height:13px;border-radius:4px;vertical-align:-2px;margin-right:7px}
+.drv-h{font:800 15px 'Manrope',sans-serif;margin-bottom:6px}
 .drv{display:grid;grid-template-columns:110px 1fr 74px;align-items:center;gap:12px;padding:8px 0}
 .d-w{font:500 19px 'Newsreader',serif;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.d-v{text-align:right;font:700 14px 'Manrope',sans-serif}
-.empty{border:1.5px dashed #cbd8d1;border-radius:12px;padding:26px;color:var(--muted);font-size:16px;line-height:1.6;background:#f8faf8}
-.foot{display:flex;justify-content:space-between;gap:20px;color:var(--muted);font-size:13.5px;border-top:1px solid var(--line);padding-top:14px;margin-top:6px}
-
-@media(max-width:1100px){.block-container{padding:1rem 1.2rem}.hero{display:block}.hero-copy{margin-top:14px}
-.xgrid{grid-template-columns:1fr}.pipe{grid-template-columns:1fr 1fr}.verdict{flex-direction:column;align-items:flex-start}
-.row{grid-template-columns:110px 1fr 64px}.r-tag,.r-threshold{display:none}.stats{grid-template-columns:1fr}}
+.d-v{text-align:right;font:700 13px 'Manrope',sans-serif}
+.empty{border:1px dashed rgba(18,54,58,.22);border-radius:17px;padding:26px;color:var(--muted);font-size:15px;line-height:1.6;background:rgba(248,252,252,.55)}
+.foot{display:flex;justify-content:space-between;gap:20px;color:var(--muted);font-size:13px;border-top:1px solid rgba(18,54,58,.14);padding-top:16px;margin-top:8px}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+@media(max-width:1100px){.block-container{padding:1rem 1.2rem}.pipe{grid-template-columns:1fr 1fr}.verdict{flex-direction:column;align-items:flex-start}.row{grid-template-columns:110px 1fr 64px}.r-tag,.r-threshold{display:none}.category-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:650px){.topbar{align-items:flex-start;gap:14px;flex-direction:column}.pill{font-size:12px}.pipe{grid-template-columns:1fr}.category-grid{grid-template-columns:1fr}.legend{flex-wrap:wrap;gap:10px}.foot{flex-direction:column;gap:5px}}
 </style>
 """
 st.markdown(CSS, unsafe_allow_html=True)
@@ -161,7 +163,7 @@ def verdict_state(results):
 
 
 # ------------------------------------------------------------
-# Header + hero
+# Header
 # ------------------------------------------------------------
 st.markdown(h("""
 <div class="topbar">
@@ -169,94 +171,74 @@ st.markdown(h("""
     <div><div class="brand">ToxicGuard AI</div><div class="brand-sub">Language intelligence system</div></div></div>
   <div class="pill"><span class="dot"></span>Local model: BERT base uncased</div>
 </div>
-<div class="hero">
-  <div class="headline">Understand harmful language.</div>
-</div>
 """), unsafe_allow_html=True)
 
-left, right = st.columns([0.9, 1.25], gap="large")
+st.markdown('<div class="command">Enter the text to analyse</div>'
+            '<div class="command-sub">Paste a comment below to inspect its language patterns and risk signals.</div>',
+            unsafe_allow_html=True)
 
-# ------------------------------------------------------------
-# Left: input + pipeline
-# ------------------------------------------------------------
-with left:
-    with st.container(border=True):
-        st.markdown(h('<div class="sec-title">Your comment</div>'
-                      '<div class="sec-sub">Type or paste a comment to begin.</div>'),
-                    unsafe_allow_html=True)
-
-        with st.form("comment_analysis_form", clear_on_submit=False):
-            comment = st.text_area(
-                "Comment",
-                placeholder="Paste a comment to inspect its language patterns...",
-                height=230,
-                label_visibility="collapsed",
-                key="comment_input",
-            )
+with st.container(border=True):
+    with st.form("comment_analysis_form", clear_on_submit=False):
+        comment = st.text_area(
+            "Comment",
+            placeholder="Paste a comment to inspect its language patterns...",
+            height=150,
+            label_visibility="collapsed",
+            key="comment_input",
+        )
+        input_controls = st.columns([1, 0.25])
+        with input_controls[0]:
             explain_on = st.toggle("Highlight the words behind the score", value=True, key="explain_toggle")
+        with input_controls[1]:
             submitted = st.form_submit_button("Analyse comment", use_container_width=True)
-        st.markdown('<div class="hint">Original wording is kept, so the model reads the comment in context.</div>',
-                    unsafe_allow_html=True)
+    st.markdown('<div class="hint">Original wording is kept, so the model reads the comment in context.</div>',
+                unsafe_allow_html=True)
 
-        if submitted:
-            clean = comment.strip()
-            if not clean:
-                for k in ("tg_results", "tg_error", "tg_expl"):
-                    st.session_state.pop(k, None)
-                st.warning("Enter a comment before running the analysis.")
-            else:
-                try:
-                    with st.spinner("Evaluating comment..."):
-                        results = predict_comment(clean)
-                        st.session_state.update(tg_results=results, tg_comment=clean, tg_expl=None, tg_note="")
-                        st.session_state.pop("tg_error", None)
-                        if explain_on:
-                            # Explain the strongest flagged category; if none is flagged,
-                            # explain the category with the highest probability.
-                            flagged = [item for item in results if item["detected"]]
-                            selected = max(
-                                flagged or results,
-                                key=lambda item: float(item["probability"])
-                            )
-                            st.session_state["tg_explain_category"] = selected["category"]
-                            try:
-                                with st.spinner("Generating SHAP word attributions..."):
-                                    expl = _cached_explanation(clean, selected["category"])
-                                st.session_state["tg_expl"] = expl
-                            except Exception as exc:
-                                st.session_state["tg_note"] = f"SHAP explanation could not be generated: {exc}"
-                        else:
-                            st.session_state["tg_note"] = "SHAP highlighting is switched off."
-                except Exception as exc:
-                    st.session_state.pop("tg_results", None)
-                    st.session_state["tg_error"] = str(exc)
+    if submitted:
+        clean = comment.strip()
+        if not clean:
+            for k in ("tg_results", "tg_error", "tg_expl"):
+                st.session_state.pop(k, None)
+            st.warning("Enter a comment before running the analysis.")
+        else:
+            try:
+                with st.spinner("Evaluating comment..."):
+                    results = predict_comment(clean)
+                    st.session_state.update(tg_results=results, tg_comment=clean, tg_expl=None, tg_note="")
+                    st.session_state.pop("tg_error", None)
+                    if explain_on:
+                        selected = max(results, key=lambda item: float(item["probability"]))
+                        st.session_state["tg_explain_category"] = selected["category"]
+                        try:
+                            with st.spinner("Generating SHAP word attributions..."):
+                                expl = _cached_explanation(clean, selected["category"])
+                            st.session_state["tg_expl"] = expl
+                        except Exception as exc:
+                            st.session_state["tg_note"] = f"SHAP explanation could not be generated: {exc}"
+                    else:
+                        st.session_state["tg_note"] = "SHAP highlighting is switched off."
+            except Exception as exc:
+                st.session_state.pop("tg_results", None)
+                st.session_state["tg_error"] = str(exc)
 
-        if st.session_state.get("tg_error"):
-            st.error(f"Analysis failed: {st.session_state['tg_error']}")
-
-    with st.container(border=True):
-        st.markdown(h("""
-        <div class="sec-title">How it works</div>
-        <div class="sec-sub">What happens between the text box and the scores.</div>
-        <div class="pipe">
-          <div class="step"><b>1</b><span>Tokenise</span><em>Split into WordPiece tokens</em></div>
-          <div class="step"><b>2</b><span>Encode</span><em>BERT reads each word in context</em></div>
-          <div class="step"><b>3</b><span>Score</span><em>Six independent sigmoid outputs</em></div>
-          <div class="step"><b>4</b><span>Decide</span><em>Each label has its own threshold</em></div>
-        </div>
-        """), unsafe_allow_html=True)
+    if st.session_state.get("tg_error"):
+        st.error(f"Analysis failed: {st.session_state['tg_error']}")
 
 # ------------------------------------------------------------
-# Right: classification report
+# Classification report
 # ------------------------------------------------------------
 results = st.session_state.get("tg_results")
 
-with right:
-    with st.container(border=True):
-        st.markdown(h('<div class="sec-title">Classification report</div>'
-                      '<div class="sec-sub">One score for each of the six toxicity categories.</div>'),
-                    unsafe_allow_html=True)
+report_card = st.container(border=True)
+explain_card = st.container(border=True)
 
+with report_card:
+    st.markdown(h('<div class="sec-title">Classification report</div>'
+                  '<div class="sec-sub">One score for each of the six toxicity categories.</div>'),
+                unsafe_allow_html=True)
+
+    report_summary, report_scores = st.columns([0.82, 1.18], gap="large")
+    with report_summary:
         if results:
             state, level, title, sub = verdict_state(results)
             highest = max(results, key=lambda x: float(x["probability"]))
@@ -276,6 +258,17 @@ with right:
               <div class="stat"><div class="stat-l">Top category</div><div class="stat-v">{html.escape(label_of(highest['category']))}</div></div>
             </div>
             """), unsafe_allow_html=True)
+        else:
+            st.markdown(h("""
+            <div class="verdict idle">
+              <div class="ring" style="--p:0;--c:var(--teal)"><div class="ring-in"><div><div class="ring-v">&ndash;</div><div class="ring-l">peak score</div></div></div></div>
+              <div><div class="v-level">Ready</div><div class="v-title">Waiting for a comment</div>
+              <div class="v-sub">Add a comment above to see the six category scores.</div></div>
+            </div>
+            """), unsafe_allow_html=True)
+
+    with report_scores:
+        if results:
             rows = []
             for item in results:
                 p = min(max(float(item["probability"]), 0.0), 1.0)
@@ -293,13 +286,6 @@ with right:
                 unsafe_allow_html=True,
             )
         else:
-            st.markdown(h("""
-            <div class="verdict idle">
-              <div class="ring" style="--p:0;--c:var(--teal)"><div class="ring-in"><div><div class="ring-v">&ndash;</div><div class="ring-l">peak score</div></div></div></div>
-              <div><div class="v-level">Ready</div><div class="v-title">Waiting for a comment</div>
-              <div class="v-sub">Add a comment on the left and choose Analyse comment. All six scores appear here.</div></div>
-            </div>
-            """), unsafe_allow_html=True)
             rows = "".join(
                 f"""<div class="row"><div class="r-name">{html.escape(n)}</div><div class="track"><div class="fill" style="width:0%"></div></div>
                 <div class="r-val">&ndash;</div><div class="r-threshold">Configured limit</div><div class="r-tag">Pending</div></div>"""
@@ -309,32 +295,33 @@ with right:
 # ------------------------------------------------------------
 # Full width: explanation
 # ------------------------------------------------------------
-with st.container(border=True):
+with explain_card:
     st.markdown(h('<div class="sec-title">Explainable AI</div>'
                   '<div class="sec-sub">Understand which parts of the comment influenced the model prediction.</div>'),
                 unsafe_allow_html=True)
     if results:
-        category_keys = [item["category"] for item in results]
-        current_category = st.session_state.get("tg_explain_category", category_keys[0])
-        selected_category = st.selectbox(
-            "Category to explain",
-            category_keys,
-            index=category_keys.index(current_category) if current_category in category_keys else 0,
-            format_func=label_of,
-            key="explain_category_selector",
+        highest_category = max(results, key=lambda item: float(item["probability"]))
+        st.session_state["tg_explain_category"] = highest_category["category"]
+        st.markdown(
+            f'<div class="auto-category"><span>Auto-explaining highest score</span>'
+            f'<strong>{html.escape(label_of(highest_category["category"]))}</strong>'
+            f'<span>{float(highest_category["probability"]):.1%}</span></div>',
+            unsafe_allow_html=True,
         )
-        if selected_category != st.session_state.get("tg_explain_category"):
-            st.session_state["tg_explain_category"] = selected_category
-            try:
-                with st.spinner("Generating SHAP word attributions..."):
-                    st.session_state["tg_expl"] = _cached_explanation(
-                        st.session_state["tg_comment"],
-                        selected_category,
-                    )
-                st.session_state.pop("tg_note", None)
-            except Exception as exc:
-                st.session_state["tg_expl"] = None
-                st.session_state["tg_note"] = f"SHAP explanation could not be generated: {exc}"
+        category_cards = []
+        for item in results:
+            probability = min(max(float(item["probability"]), 0.0), 1.0)
+            hit = item["detected"]
+            status = "Detected" if hit else "Below limit"
+            category_cards.append(
+                f'<div class="category-card {"detected" if hit else ""}">'
+                f'<div class="category-card-name">{html.escape(label_of(item["category"]))}</div>'
+                f'<div class="category-card-score">{probability:.1%}</div>'
+                f'<div class="category-card-meta">{status} · limit {float(item["threshold"]):.1%}</div>'
+                f'<div class="category-card-track"><span style="width:{probability * 100:.2f}%"></span></div>'
+                f'</div>'
+            )
+        st.markdown(f'<div class="category-grid">{"".join(category_cards)}</div>', unsafe_allow_html=True)
     expl = st.session_state.get("tg_expl")
 
     if results and expl:
@@ -396,6 +383,18 @@ with st.container(border=True):
         else:
             msg = "Analyse a comment to see SHAP token contributions. Red highlights push the selected category score higher; green highlights push it lower."
         st.markdown(f'<div class="empty">{html.escape(msg)}</div>', unsafe_allow_html=True)
+
+with st.container(border=True):
+    st.markdown(h("""
+    <div class="sec-title">How it works</div>
+    <div class="sec-sub">What happens between the text box and the scores.</div>
+    <div class="pipe">
+      <div class="step"><b>1</b><span>Tokenise</span><em>Split into WordPiece tokens</em></div>
+      <div class="step"><b>2</b><span>Encode</span><em>BERT reads each word in context</em></div>
+      <div class="step"><b>3</b><span>Score</span><em>Six independent sigmoid outputs</em></div>
+      <div class="step"><b>4</b><span>Decide</span><em>Each label has its own threshold</em></div>
+    </div>
+    """), unsafe_allow_html=True)
 
 
 st.markdown(h("""
