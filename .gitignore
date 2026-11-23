@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.pytest_cache/
+
+# Secrets
+.streamlit/secrets.toml
+
+# Large / generated files
+artifacts/model/
+checkpoints/
+toxicguard-mbert/
+*.zip
+*.safetensors
+*.bin
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/

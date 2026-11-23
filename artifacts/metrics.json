@@ -1,0 +1,286 @@
+{
+  "training": {
+    "base_model": "google-bert/bert-base-multilingual-cased",
+    "max_len": 128,
+    "epochs": 2,
+    "batch_size": 32,
+    "learning_rate": 2e-05,
+    "loss": "masked BCE with pos_weight",
+    "seed": 42,
+    "gpu": "Tesla T4",
+    "lda_topics": 5,
+    "train_rows": 53144,
+    "val_rows": 5124,
+    "test_rows": 9041,
+    "train_runtime_min": 13.8
+  },
+  "model_repo": "Vivek1717/toxicguard-mbert",
+  "baseline_tfidf": {
+    "per_label": {
+      "toxic": {
+        "f1": 0.8611694152923538,
+        "roc_auc": 0.9586795550044162
+      },
+      "severe_toxic": {
+        "f1": 0.4833110814419226,
+        "roc_auc": 0.9531905261579974
+      },
+      "obscene": {
+        "f1": 0.8255813953488372,
+        "roc_auc": 0.9700082831399428
+      },
+      "threat": {
+        "f1": 0.4235294117647059,
+        "roc_auc": 0.9581963250569446
+      },
+      "insult": {
+        "f1": 0.7309803921568627,
+        "roc_auc": 0.9442607342354613
+      },
+      "identity_hate": {
+        "f1": 0.5181159420289855,
+        "roc_auc": 0.9489481824676269
+      }
+    },
+    "macro_f1": 0.6404479396722779,
+    "macro_auc": 0.955547267677065,
+    "accuracy": 0.8975777015816835,
+    "precision": 0.8640192539109507,
+    "recall": 0.85833831440526,
+    "f1_toxic": 0.8611694152923538
+  },
+  "overall": {
+    "binary_precision": 0.8553637135578828,
+    "binary_recall": 0.9031679617453676,
+    "macro_f1": 0.6928454339790714,
+    "micro_f1": 0.8262953663547136,
+    "macro_auc": 0.9651031392565002,
+    "binary_accuracy": 0.9076429598495742,
+    "binary_f1": 0.8786160779183021
+  },
+  "dataset": {
+    "total": 60272,
+    "train": 46107,
+    "val": 5124,
+    "test": 9041,
+    "by_source_lang": [
+      {
+        "source": "jigsaw",
+        "lang": "en",
+        "n": 46174,
+        "toxic_rate": 0.330553991423745
+      },
+      {
+        "source": "textdetox",
+        "lang": "en",
+        "n": 4899,
+        "toxic_rate": 0.4896917738313942
+      },
+      {
+        "source": "textdetox",
+        "lang": "hi",
+        "n": 4963,
+        "toxic_rate": 0.4988917993149305
+      },
+      {
+        "source": "textdetox",
+        "lang": "hinglish",
+        "n": 4236,
+        "toxic_rate": 0.5118035882908404
+      }
+    ]
+  },
+  "per_label": {
+    "toxic": {
+      "precision": 0.8553637135578828,
+      "recall": 0.9031679617453676,
+      "f1": 0.8786160779183021,
+      "roc_auc": 0.9709397354145556,
+      "support": 3346,
+      "threshold": 0.6000000000000002
+    },
+    "severe_toxic": {
+      "precision": 0.4803370786516854,
+      "recall": 0.684,
+      "f1": 0.5643564356435643,
+      "roc_auc": 0.9746733623144956,
+      "support": 250,
+      "threshold": 0.8400000000000002
+    },
+    "obscene": {
+      "precision": 0.8287416232315711,
+      "recall": 0.8868525896414342,
+      "f1": 0.8568129330254042,
+      "roc_auc": 0.9795139245348292,
+      "support": 1255,
+      "threshold": 0.8100000000000002
+    },
+    "threat": {
+      "precision": 0.4675324675324675,
+      "recall": 0.5373134328358209,
+      "f1": 0.5,
+      "roc_auc": 0.937641817176156,
+      "support": 67,
+      "threshold": 0.6100000000000001
+    },
+    "insult": {
+      "precision": 0.7136563876651982,
+      "recall": 0.8393782383419689,
+      "f1": 0.7714285714285715,
+      "roc_auc": 0.9633714659385388,
+      "support": 1158,
+      "threshold": 0.8000000000000002
+    },
+    "identity_hate": {
+      "precision": 0.6408839779005525,
+      "recall": 0.5395348837209303,
+      "f1": 0.5858585858585859,
+      "roc_auc": 0.9644785301604255,
+      "support": 215,
+      "threshold": 0.9100000000000003
+    }
+  },
+  "confusion_matrix": [
+    [
+      5184,
+      511
+    ],
+    [
+      324,
+      3022
+    ]
+  ],
+  "per_language": {
+    "en": {
+      "n": 7661,
+      "accuracy": 0.9192011486751077,
+      "f1": 0.8863594639250963,
+      "roc_auc": 0.9765461721615198
+    },
+    "hi": {
+      "n": 745,
+      "accuracy": 0.9422818791946309,
+      "f1": 0.9403606102635229,
+      "roc_auc": 0.9876365706708179
+    },
+    "hinglish": {
+      "n": 635,
+      "accuracy": 0.7275590551181103,
+      "f1": 0.7566807313642757,
+      "roc_auc": 0.802937965260546
+    }
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "val_macro_f1": 0.5992271363013789,
+      "val_macro_auc": 0.9682765391186429,
+      "val_loss": 0.2863129675388336,
+      "train_loss": 0.29358219146728515
+    },
+    {
+      "epoch": 2,
+      "val_macro_f1": 0.6449238820996991,
+      "val_macro_auc": 0.9709713517967032,
+      "val_loss": 0.2726952135562897,
+      "train_loss": 0.24379161410861544
+    }
+  ],
+  "sentiment_eval": {
+    "dataset": "TweetEval-sentiment (n=3000)",
+    "accuracy": 0.5226666666666666,
+    "macro_f1": 0.5219728071975542
+  },
+  "ie_eval": {
+    "precision": 1.0,
+    "recall": 0.9090909090909091,
+    "f1": 0.9523809523809523,
+    "target_accuracy": 0.95,
+    "n": 20
+  },
+  "language_id": {
+    "accuracy": 0.7522222222222222
+  },
+  "translation_ensemble": {
+    "n": 240,
+    "f1_without": 0.8634686346863468,
+    "f1_with": 0.8686131386861314
+  },
+  "topics": [
+    {
+      "topic": "T1: fuck / hate / wikipedia",
+      "keywords": [
+        "fuck",
+        "hate",
+        "wikipedia",
+        "want",
+        "dont",
+        "stupid",
+        "asshole",
+        "moron",
+        "fucking",
+        "care"
+      ]
+    },
+    {
+      "topic": "T2: page / don / know",
+      "keywords": [
+        "page",
+        "don",
+        "know",
+        "just",
+        "like",
+        "jew",
+        "cunt",
+        "penis",
+        "talk",
+        "article"
+      ]
+    },
+    {
+      "topic": "T3: nigger / bad / admin",
+      "keywords": [
+        "nigger",
+        "bad",
+        "admin",
+        "freedom",
+        "bitches",
+        "bastard",
+        "hey",
+        "pro",
+        "bum",
+        "vomit"
+      ]
+    },
+    {
+      "topic": "T4: fat / gay / pig",
+      "keywords": [
+        "fat",
+        "gay",
+        "pig",
+        "like",
+        "people",
+        "wiki",
+        "balls",
+        "vandalism",
+        "faggots",
+        "little"
+      ]
+    },
+    {
+      "topic": "T5: shit / ass / suck",
+      "keywords": [
+        "shit",
+        "ass",
+        "suck",
+        "die",
+        "fucking",
+        "bitch",
+        "faggot",
+        "dick",
+        "sucks",
+        "fag"
+      ]
+    }
+  ]
+}
